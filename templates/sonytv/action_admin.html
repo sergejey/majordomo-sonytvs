@@ -1,0 +1,70 @@
+<!-- action usual -->
+[#if DATA_SOURCE="sonytvs" || DATA_SOURCE=""#]
+<!-- table sonytvs search -->
+[#if VIEW_MODE="search_sonytvs" || VIEW_MODE=""#]
+[#inc sonytvs_search_admin.html#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs search -->
+<!-- table sonytvs edit -->
+[#if VIEW_MODE="edit_sonytvs"#]
+[#if ID!=""#]
+[#if TITLE!=""#]<h4>[#TITLE#]</h4>[#endif TITLE#]
+<ul class="nav nav-tabs">
+    <li[#if TAB=""#] class="active"[#endif#]>
+    <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><#LANG_GENERAL#></a>
+    </li>
+    <li[#if TAB="remote"#] class="active"[#endif#]>
+    <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=remote">Remote</a>
+    </li>
+    <li[#if TAB="data"#] class="active"[#endif#]>
+    <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=data">&#060#LANG_DATA#&#062</a>
+    </li>
+    <!--#
+    <li[#if TAB="apps"#] class="active"[#endif#]>
+    <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=apps">Apps</a>
+    </li>
+    #-->
+
+</ul>
+&nbsp;<br/>
+[#endif ID#]
+[#if TAB=""#]
+[#inc sonytvs_edit_default.html#]
+[#endif TAB#]
+[#if TAB="data"#]
+[#inc sonytvs_edit_data.html#]
+[#endif TAB#]
+[#if TAB="apps"#]
+[#inc sonytvs_edit_apps.html#]
+[#endif TAB#]
+[#if TAB="remote"#]
+[#inc sonytvs_edit_remote.html#]
+[#endif TAB#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs edit -->
+<!-- table sonytvs view -->
+[#if VIEW_MODE="view_sonytvs"#]
+[#if TAB=""#]
+[#inc sonytvs_view_default.html#]
+[#endif TAB#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs view -->
+[#endif DATA_SOURCE#]
+<!-- action usual -->
+[#if DATA_SOURCE="sonytvs_commands"#]
+<!-- table sonytvs_commands search -->
+[#if VIEW_MODE="search_sonytvs_commands" || VIEW_MODE=""#]
+[#inc sonytvs_commands_search_admin.html#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs_commands search -->
+<!-- table sonytvs_commands edit -->
+[#if VIEW_MODE="edit_sonytvs_commands"#]
+[#inc sonytvs_commands_edit.html#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs_commands edit -->
+<!-- table sonytvs_commands view -->
+[#if VIEW_MODE="view_sonytvs_commands"#]
+[#inc sonytvs_commands_view.html#]
+[#endif VIEW_MODE#]
+<!-- / table sonytvs_commands view -->
+[#endif DATA_SOURCE#]

@@ -1,0 +1,19 @@
+[#if ID!=""#]
+<h1>[#TITLE#]</h1>
+
+[#inc sonytvs_edit_remote.html#]
+
+[#if HIDE_BACK!="1"#]
+&nbsp;<br/>
+<p>
+    <a href="?">&lt;&lt;&lt; <#LANG_BACK#></a>
+</p>
+[#endif#]
+
+[#else ID#]
+[#begin TVS#]
+<p>
+    <a href="?id=[#ID#]"><h2>[#TITLE#]</h2></a>
+</p>
+[#end TVS#]
+[#endif ID#]
