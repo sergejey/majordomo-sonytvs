@@ -61,6 +61,14 @@
   if ($this->tab=='') {
   }
 
+  if ($this->tab=='apps') {
+      //step: apps
+      $res=$this->sendCommand($rec['ID'],'programs');
+      $data=json_decode($res,true);
+      if (is_array($data['result'][0])) {
+          $out['PROGRAMS']=$data['result'][0];
+      }
+  }
   // step: remote
   if ($this->tab=='remote') {
       global $remove_id;
@@ -83,6 +91,14 @@
       for ($i = 0; $i < $total; $i++) {
       }
       $out['MACROS']=$macros;
+
+      $res=$this->sendCommand($rec['ID'],'keys');
+      $data=json_decode($res,true);
+      //print_r($data);exit;
+      if (is_array($data['result'][1])) {
+          $out['ALL_KEYS']=$data['result'][1];
+      }
+
   }
 
   // step: data

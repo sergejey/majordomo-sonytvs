@@ -9,6 +9,19 @@
         });
         return false;
     }
+    function searchOnTV() {
+        var text=$('#searchQry').val();
+        if (text!='') {
+            $('#status[#ID#]').html(text+' ...');
+            var url="<#ROOTHTML#>ajax/sonytv.html?id=[#ID#]&op=search&text="+encodeURIComponent(text);
+            $.ajax({
+                url: url
+            }).done(function(data) {
+                $('#status[#ID#]').html(text+'... OK');
+            });
+            $('#searchQry').val('')
+        }
+    }
     function sendMacroToTv(id, title) {
         $('#status[#ID#]').html('<b>'+title+'</b> ...');
         var url="<#ROOTHTML#>ajax/sonytv.html?id=[#ID#]&op=macro&macro="+encodeURIComponent(id);
@@ -20,7 +33,15 @@
         return false;
     }
 </script>
-<table cellpadding="10" width="300" border="0">
+<style>
+    .remote {
+        width:300px;
+    }
+    .remote td {
+        padding:10px;
+    }
+</style>
+<table class="remote">
     <tr>
         <td colspan="3" align="center">
             <div id="status[#ID#]">...</div>
@@ -40,7 +61,7 @@
                         <a href="#" class="btn btn-default" onclick="return sendKeyToTv('VolumeUp');"><i class="glyphicon glyphicon-volume-up"></i></a>
                     </td>
                     <td align="center">
-                        <a href="#" class="btn btn-default" onclick="return sendKeyToTv('PowerOff');"><i class="glyphicon glyphicon-flash"></i></a>
+                        <a href="#" class="btn btn-default" onclick="return sendKeyToTv('TvPower');"><i class="glyphicon glyphicon-flash"></i></a>
                     </td>
                 </tr>
             </table>
@@ -55,7 +76,7 @@
 
     <tr>
         <td align="center"><a href="#" class="btn btn-default" onclick="return sendKeyToTv('Left');"><i class="glyphicon glyphicon-arrow-left"></i></a></td>
-        <td align="center"><a href="#" class="btn btn-default" onclick="return sendKeyToTv('Enter');"><i class="glyphicon glyphicon-screenshot"></i></a></td>
+        <td align="center"><a href="#" class="btn btn-default" onclick="return sendKeyToTv('Confirm');"><i class="glyphicon glyphicon-screenshot"></i></a></td>
         <td align="center"><a href="#" class="btn btn-default" onclick="return sendKeyToTv('Right');"><i class="glyphicon glyphicon-arrow-right"></i></a></td>
     </tr>
 
@@ -85,6 +106,11 @@
                 </tr>
             </table>
         </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><input type="text" class="form-control" id="searchQry" placeholder="YouTube"></td>
+        <td><a href="#" class="btn btn-default" onclick="searchOnTV();return false;"><#LANG_SEARCH#></a></td>
     </tr>
 
     <tr>
@@ -153,5 +179,19 @@
         </div>
     </fieldset>
 </form>
+
+[#if ALL_KEYS#]
+<hr>
+<h2>Keys available</h2>
+<table>
+    [#begin ALL_KEYS#]
+    <tr>
+        <td><b>[#name#]</b></td>
+        <td><a href="#" class="btn btn-default" onclick="return sendKeyToTv('[#name#]');">Press: [#name#]</a></td>
+    </tr>
+
+    [#end ALL_KEYS#]
+</table>
+[#endif ALL_KEYS#]
 
 [#endif#]

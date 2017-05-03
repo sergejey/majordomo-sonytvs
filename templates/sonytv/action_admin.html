@@ -19,9 +19,12 @@
     <li[#if TAB="data"#] class="active"[#endif#]>
     <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=data">&#060#LANG_DATA#&#062</a>
     </li>
-    <!--#
     <li[#if TAB="apps"#] class="active"[#endif#]>
     <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=apps">Apps</a>
+    </li>
+    <!--#
+    <li[#if TAB="tests"#] class="active"[#endif#]>
+    <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=tests">Tests</a>
     </li>
     #-->
 
@@ -40,6 +43,11 @@
 [#if TAB="remote"#]
 [#inc sonytvs_edit_remote.html#]
 [#endif TAB#]
+
+[#if TAB="tests"#]
+[#inc sonytvs_edit_tests.html#]
+[#endif TAB#]
+
 [#endif VIEW_MODE#]
 <!-- / table sonytvs edit -->
 <!-- table sonytvs view -->

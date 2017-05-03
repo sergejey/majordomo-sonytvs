@@ -163,9 +163,24 @@ function usual(&$out) {
 
  if ($this->ajax) {
      global $op;
-     global $key;
+     global $command;
      $result='';
 
+     header("HTTP/1.0: 200 OK\n");
+     header('Content-Type: text/html; charset=utf-8');
+
+     $key=$_GET['key'];
+
+     if ($command=='test') {
+         $m_result=$this->sendCommand($id,'test');
+         echo $m_result;
+     }
+
+     if ($op=='search') {
+         global $text;
+         $op='';
+         $key='Home,sleep:3,Up,sleep:1,Right,Confirm,sleep:2,text:'.$text.',sleep:2,Return,sleep:2,Confirm';
+     }
      if ($op=='macro') {
          global $macro;
          $macroRec=SQLSelectOne("SELECT * FROM sonytvs_macros WHERE ID=".(int)$macro);
@@ -187,7 +202,11 @@ function usual(&$out) {
          $total = count($keys);
          for ($i = 0; $i < $total; $i++) {
              if (preg_match('/^app:/',trim($keys[$i]))) {
-                 $m_result=$this->sendCommand($id,'app',trim(str_replace('app:','',$keys[$i])));
+                 $m_result = $this->sendCommand($id, 'app', trim(str_replace('app:', '', $keys[$i])));
+             } elseif (preg_match('/^text:/',trim($keys[$i]))) {
+                $m_result=$this->sendCommand($id,'text',trim(str_replace('text:','',$keys[$i])));
+             } elseif (preg_match('/^sleep:(\d+)/',trim($keys[$i]),$m)) {
+                 sleep($m[1]);
              } else {
                  $m_result=$this->sendCommand($id,'key',trim($keys[$i]));
              }
@@ -312,6 +331,24 @@ function usual(&$out) {
        $url='http://'.$ip.'/sony/appControl';
        $data = '{"method":"getApplicationList","params":[],"id":10, "version":"1.0"}';
        $headers[]= 'SOAPACTION:"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"';
+
+     } elseif ($command=='test') {
+
+         $url='http://'.$ip.'/sony/browser';
+         //$data = '{"method":"getMethodTypes","params":[],"id":10, "version":"1.0"}';
+         $data = '{"id":7,"method":"setTextUrl","version":"1.0","params":["http://google.com/","","",""]}';
+         $headers[]= 'SOAPACTION:"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"';
+
+     } elseif ($command=='keys') {
+
+         $url='http://'.$ip.'/sony/system';
+         $data = '{"method":"getRemoteControllerInfo","params":[],"id":10, "version":"1.0"}';
+         $headers[]= 'SOAPACTION:"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"';
+
+     } elseif ($command=='text') {
+
+         $url='http://'.$ip.'/sony/appControl';
+         $data = '{"method":"setTextForm","params":["'.$value.'"],"id":10, "version":"1.0"}';
 
      } elseif ($command=='app') {
 
@@ -452,7 +489,7 @@ function usual(&$out) {
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
       curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_HEADER, true);
+      //curl_setopt($ch, CURLOPT_HEADER, true);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
       $result=curl_exec($ch);
 

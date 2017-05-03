@@ -1,1 +1,26 @@
-apps
+[#if PROGRAMS#]
+<script type="text/javascript">
+    function runTVProgram(uri) {
+        var url="<#ROOTHTML#>ajax/sonytv.html?id=[#ID#]&key=app:"+encodeURIComponent(uri);
+        $.ajax({
+            url: url
+        }).done(function(data) {
+        });
+    }
+</script>
+<table class="table">
+    [#begin PROGRAMS#]
+    <tr>
+        <td align="center"><img src="[#icon#]" width="50"><br/><br/><a href="#" onclick="runTVProgram('[#uri#]');return false;" class="btn btn-default">START</a></td>
+        <td><b>[#title#]</b>
+            <br>
+            [#uri#]
+            <br>
+            Code: <i>getURL('<#BASE_URL#><#ROOTHTML#>ajax/sonytv.html?id=<#ID#>&key=app:[#uri#]');</i>
+        </td>
+    </tr>
+    [#end PROGRAMS#]
+</table>
+[#else PROGRAMS#]
+<p>No data retrieved...</p>
+[#endif PROGRAMS#]
