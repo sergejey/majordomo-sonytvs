@@ -23,9 +23,23 @@
 <div class="form-group">
  <label class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
  IP:
+  (*)
  </label>
  <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
 </div>
+
+ <div class="form-group">
+  <label class="col-lg-3 control-label">
+   Search macro:
+  </label>
+  <div class="col-lg-4"><input type="text" class="form-control" name="search_macro" value="[#SEARCH_MACRO#]">
+   <small>
+   leave blank for default or use keys and {text}<br/>
+   Ex.: <i>Home,sleep:3,Up,sleep:1,Right,Confirm,sleep:2,{text},sleep:2,Return,sleep:2,Confirm</i>
+   </small>
+  </div>
+ </div>
+
 <!-- TOKEN (varchar) -->
 [#if ID!=""#]
 <div class="form-group">
@@ -48,6 +62,7 @@
  </div>
 </div>
 [#endif ID#]
+
 <div class="form-group">
         <div class="col-lg-offset-3 col-lg-4">
  [#if ID!=""#]

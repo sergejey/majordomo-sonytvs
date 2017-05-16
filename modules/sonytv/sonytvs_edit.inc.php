@@ -24,7 +24,13 @@
   //updating 'TOKEN' (varchar)
    global $token;
    $rec['TOKEN']=$token;
+
+      global $search_macro;
+      $rec['SEARCH_MACRO']=$search_macro;
+
   }
+
+
   // step: data
   if ($this->tab=='data') {
   }

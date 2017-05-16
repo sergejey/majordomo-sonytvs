@@ -179,7 +179,13 @@ function usual(&$out) {
      if ($op=='search') {
          global $text;
          $op='';
-         $key='Home,sleep:3,Up,sleep:1,Right,Confirm,sleep:2,text:'.$text.',sleep:2,Return,sleep:2,Confirm';
+         $tv=SQLSelectOne("SELECT * FROM sonytvs WHERE ID=".(int)$id);
+         if ($tv['SEARCH_MACRO']!='') {
+             $searchMacro=$tv['SEARCH_MACRO'];
+         } else {
+             $searchMacro='Home,sleep:3,Up,sleep:1,Right,Confirm,sleep:2,{text},sleep:2,Return,sleep:2,Confirm';
+         }
+         $key=str_replace('{text}','text:'.$text,$searchMacro);
      }
      if ($op=='macro') {
          global $macro;
@@ -571,6 +577,7 @@ sonytvs_commands -
  sonytvs: TITLE varchar(100) NOT NULL DEFAULT ''
  sonytvs: IP varchar(255) NOT NULL DEFAULT ''
  sonytvs: TOKEN varchar(255) NOT NULL DEFAULT ''
+ sonytvs: SEARCH_MACRO varchar(255) NOT NULL DEFAULT '' 
  
  sonytvs_commands: ID int(10) unsigned NOT NULL auto_increment
  sonytvs_commands: TITLE varchar(100) NOT NULL DEFAULT ''
